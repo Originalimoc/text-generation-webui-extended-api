@@ -95,7 +95,7 @@ def load_tokenizer(model_name, model):
         tokenizer = AutoTokenizer.from_pretrained(Path(f"{shared.args.model_dir}/gpt-j-6B/"))
     elif model.__class__.__name__ in ['LlamaForCausalLM', 'LlamaGPTQForCausalLM', 'ExllamaHF']:
         # Try to load an universal LLaMA tokenizer
-        if not any(s in shared.model_name.lower() for s in ['llava', 'oasst']):
+        if any(s in shared.model_name.lower() for s in ['llava', 'oasst']):
             for p in [Path(f"{shared.args.model_dir}/llama-tokenizer/"), Path(f"{shared.args.model_dir}/oobabooga_llama-tokenizer/")]:
                 if p.exists():
                     logger.info(f"Loading the universal LLaMA tokenizer from {p}...")
